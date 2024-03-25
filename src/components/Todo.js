@@ -9,7 +9,24 @@ function Todo() {
   const [Input, setInput] = useState("");
   const [Todo, setTodo] = useState([]);
   const [EditID, setEditID] = useState(0);
+  const[isOpen,setisOpen]= useState(false);
+    useEffect(()=>{
+      if (isOpen){
+        alert("Element deleted")
+        setisOpen(false)
+      }
+    },[isOpen])
+    const handleDelete= (id) =>{
+      const confirmed = window.confirm("Do you want to delete?")
+      if(confirmed){
+        onDelete(id)
+        setisOpen(true)
+    }
+  }
   function addTodo() {
+    // if (Todo.length==3){
+    //   alert("Only 3 elements can be added.")
+    // }
     if (Input !== "" && ListExist(Input)) {
       setTodo([...Todo, { list: Input, id: Date.now(), status: false }]);
       setInput("");
@@ -99,7 +116,7 @@ function Todo() {
                   className="list-item-icons"
                   id="delete"
                   title="Delete"
-                  onClick={() => onDelete(to.id)}
+                  onClick={() => handleDelete(to.id)}
                 />
               </span>
             </li>
